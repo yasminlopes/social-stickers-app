@@ -11,7 +11,6 @@ export const ApiService = {
         const response = await api.post('/login', data);
         return response.data;
       } catch (error) {
-        console.error(error.message);
         throw error;
       }
     },
@@ -23,7 +22,6 @@ export const ApiService = {
           return response.data
           
         } catch (error) {
-          console.error(error.message);
           throw error;
         }
     }
