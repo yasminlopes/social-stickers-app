@@ -11,21 +11,19 @@ export default function LoginScreen({ navigation }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(false); 
 
-  
     const handleLogin = async () => {
-      setIsLoading(true);
+        setIsLoading(true);
+        try {
+          const loginData = {
+            username: username,
+            password: password,
+          };
     
-      try {
-        const loginData = {
-          username: username,
-          password: password,
-        };
+          const response = await ApiService.login(loginData);
     
-        const response = await ApiService.login(loginData);
-    
-        if (response.data.token) {
-          setIsAuthenticated(true);
-          navigation.navigate('Home', { username: username });
+          if (response.data.token) {
+            setIsAuthenticated(true);
+            navigation.navigate('Home', { username: username });
         }
     
         NotificationService.notify(response);
@@ -82,10 +80,13 @@ export default function LoginScreen({ navigation }) {
                 secureTextEntry
             />
 
-            <TouchableOpacity
-                style={styles.button} onPress={handleLogin}>
-                {isLoading ? (<ActivityIndicator /> ) : (<Text style={styles.buttonText}>Login</Text>)}
-            </TouchableOpacity>
+          <TouchableOpacity
+              style={[styles.button, (!username || !password || isLoading) ? { opacity: 0.5 } : { opacity: 1 }]}
+              onPress={handleLogin}
+              disabled={!username || !password || isLoading}
+          >
+              {isLoading ? (<ActivityIndicator /> ) : (<Text style={styles.buttonText}>Login</Text>)}
+          </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('RegisterUserScreen')}>
             <Text style={styles.linkText}>
