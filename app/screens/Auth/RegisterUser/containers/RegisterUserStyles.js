@@ -6,32 +6,42 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
-  logo: {
-    width: 200,
-    height: 200,
+  containerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   input: {
-    padding: 10,
-    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 8,
-    marginBottom: 10,
     borderWidth: 1,
     borderColor: 'lightgray',
     borderStyle: 'solid',
+    backgroundColor: '#fff',
+  },
+  leftIcon: {
+    marginRight: 10,
+    marginLeft: 10
   },
   button: {
     backgroundColor: '#293A4C',
-    padding: 10,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '80%',
     height: 50,
+    width: '95%',
   },
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
+  linkText: {
+    color: '#293A4C',
+    marginTop: 10,
+    fontWeight: 'bold',
+  }
 });

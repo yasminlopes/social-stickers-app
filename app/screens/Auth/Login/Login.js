@@ -23,12 +23,12 @@ export default function LoginScreen({ navigation }) {
           if (response.token) {
             setIsAuthenticated(true);
 
-            navigation.navigate('Home');
+            navigation.navigate('Home', { username: username });
           } else {
-            console.error('Login failed:', response.error || 'Unknown error');
+            console.error(response.error);
           }
         } catch (error) {
-          console.error('Error logging in:', error.message);
+          console.error(error.message);
         } finally {
           setIsLoading(false);
         }
@@ -83,6 +83,11 @@ export default function LoginScreen({ navigation }) {
             <TouchableOpacity
                 style={styles.button} onPress={handleLogin}>
                 {isLoading ? (<ActivityIndicator /> ) : (<Text style={styles.buttonText}>Login</Text>)}
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('RegisterUserScreen')}>
+            <Text style={styles.linkText}>
+              Criar conta</Text>
             </TouchableOpacity>
         </View>
     );
