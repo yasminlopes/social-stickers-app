@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ApiService } from '../../../../services/api/ApiService';
+import { NotificationService } from '../../../../services/notification/NotificationService';
 
 export const useRegisterUser = (navigation) => {
   const [name, setName] = useState('');
@@ -25,11 +26,10 @@ export const useRegisterUser = (navigation) => {
 
       if (response.user) {
         navigation.navigate('Home', { username: username });
-      } else {
-        console.error(response.error );
-      }
+        NotificationService.notify(response);
+      } 
     } catch (error) {
-      console.error(error.message);
+      NotificationService.notify(error.response.data);
     } finally {
       setIsLoading(false);
     }

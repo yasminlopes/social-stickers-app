@@ -3,6 +3,7 @@ import { Button, TextInput, View, Image, Text, TouchableOpacity, ActivityIndicat
 import * as LocalAuthentication from 'expo-local-authentication';
 import { styles } from './LoginStyles';
 import { ApiService } from '../../../services/api/ApiService';
+import { NotificationService } from '../../../services/notification/NotificationService';
 
 export default function LoginScreen({ navigation }) {
     const [username, setUsername] = useState('');
@@ -10,31 +11,32 @@ export default function LoginScreen({ navigation }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, setIsLoading] = useState(false); 
 
+  
     const handleLogin = async () => {
-        setIsLoading(true); 
-        try {
-          const loginData = {
-            username: username,
-            password: password,
-          };
+      setIsLoading(true);
     
-          const response = await ApiService.login(loginData);
+      try {
+        const loginData = {
+          username: username,
+          password: password,
+        };
     
-          if (response.token) {
-            setIsAuthenticated(true);
-
-            navigation.navigate('Home', { username: username });
-          } else {
-            console.error(response.error);
-          }
-        } catch (error) {
-          console.error(error.message);
-        } finally {
-          setIsLoading(false);
+        const response = await ApiService.login(loginData);
+    
+        if (response.data.token) {
+          setIsAuthenticated(true);
+          navigation.navigate('Home', { username: username });
         }
-      };
     
-
+        NotificationService.notify(response);
+    
+      } catch (error) {
+        NotificationService.notify(error.response.data);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
     async function verifyAvailableBiometrics() {
         const compatible = await LocalAuthentication.hasHardwareAsync();
 
